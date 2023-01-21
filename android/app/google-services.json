@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "27302920624",
+    "project_id": "lifestyle-a1f09",
+    "storage_bucket": "lifestyle-a1f09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27302920624:android:c7234335c59f2d09c5d675",
+        "android_client_info": {
+          "package_name": "com.example.lifestyle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27302920624-p58jld5n9f3kjnu97un8rtdjrtmgpcf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARfhF02A-VMrYvbJSw9ugeWtQ85jY9Y4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27302920624-p58jld5n9f3kjnu97un8rtdjrtmgpcf1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "27302920624-rkhepqijm845vll0btufc9g3uingucru.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lifestyle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
