@@ -76,10 +76,16 @@ class _CommentButtonState extends State<CommentButton> {
                             child: Wrap(
                           children: [
                             SizedBox(
-                              height: 550,
+                              height: 555,
                               width: double.infinity,
                               child: Column(
                                 children: [
+                                  SizedBox(height: 5,),
+                                 Container(height: 5,width: 40,decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(10),
+                                   color: Colors.grey
+                                 ),),
+                                  SizedBox(height: 5,),
                                   const Text(
                                     "Comments",
                                     style: TextStyle(

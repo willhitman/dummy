@@ -53,21 +53,21 @@ class _AdminProfileState extends State<AdminProfile> {
       body: SingleChildScrollView(
         child: Wrap(
           children: [
-            SizedBox(
+            widget.userID != FirebaseAuth.instance.currentUser!.uid ?SizedBox(
               height: 90,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  InkWell(child: Icon(Icons.arrow_back),onTap: (){
+                  widget.userID != FirebaseAuth.instance.currentUser!.uid ? InkWell(child: Icon(Icons.arrow_back),onTap: (){
                     Navigator.pop(context);
-                  },),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 120.0),
+                  },):SizedBox(),
+               widget.userID == FirebaseAuth.instance.currentUser!.uid ? const SizedBox() : const Padding(
+                    padding: EdgeInsets.only(left: 120.0),
                     child: Text("LifeStyle", style: TextStyle(fontSize: 30,),),
                   )
                 ],
               ),
-            ),
+            ):SizedBox(),
             StreamBuilder(
                 stream: DatabaseService()
                     .getSingleUser(widget.userID),
@@ -267,8 +267,8 @@ class _AdminProfileState extends State<AdminProfile> {
                                                   ? Text(snapshot
                                                       .data["description"]
                                                       .toString())
-                                                  : const Text(
-                                                      "Tap Edit icon to add description"),
+                                                  : widget.userID == FirebaseAuth.instance.currentUser!.uid ?  const Text(
+                                                      "Tap Edit icon to add description") : const Text(".."),
                                              widget.userID == FirebaseAuth.instance.currentUser!.uid ? SizedBox(
                                                   width: 20,
                                                   child: InkWell(

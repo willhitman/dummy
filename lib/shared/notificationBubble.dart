@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lifestyle/services/database_service.dart';
 import 'package:lifestyle/shared/recent_message.dart';
 import 'package:lifestyle/widgets/comment_bubble.dart';
+import 'package:lifestyle/widgets/like_bubble.dart';
 import 'package:lifestyle/widgets/widgets.dart';
 
 class notificationBubble extends StatefulWidget {
@@ -26,6 +27,7 @@ class notificationBubble extends StatefulWidget {
 class _notificationBubbleState extends State<notificationBubble> {
   bool _deleting = false;
   String _userName = "";
+  List users = [];
   Stream<QuerySnapshot>? comments;
   @override
   void initState() {
@@ -57,9 +59,9 @@ class _notificationBubbleState extends State<notificationBubble> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Your Post"),
+                     const  Text("Your Post"),
                       Text(widget.postName),
-                      Text("date")
+                     const  Text("date")
                     ],
                   ),
                 ),
@@ -97,41 +99,55 @@ class _notificationBubbleState extends State<notificationBubble> {
                       onTap: (){
                         checkCount(widget.comments) ? showSnackBar(context,Colors.orange,"You currently have zero likes") : showBottomSheet(
                             context: context,
-                            backgroundColor: Color.fromARGB(190, 0, 0, 0),
+                            backgroundColor: const Color.fromARGB(190, 0, 0, 0),
                             builder: (BuildContext context) {
-                              print("here");
-                              return SizedBox(
-                                height: 500,
-                                width: double.infinity,
-                                child: SingleChildScrollView(
-                                  child: FutureBuilder<DocumentSnapshot>(
-                                      future: DatabaseService().getSinglePost(widget.docID),
-                                      builder: (BuildContext context, AsyncSnapshot <DocumentSnapshot> snapshot){
-                                        if (snapshot.hasError) {
-                                          return Text("Something went wrong");
-                                        }
+                              return SingleChildScrollView(
+                                child: Wrap(
+                                  children: [
+                                    SizedBox(
+                                      height: 500,
+                                      width: double.infinity,
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(height: 5,),
+                                          Container(height: 5,width: 40,decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Colors.grey
+                                          ),),
+                                          const SizedBox(height: 5,),
+                                          FutureBuilder<DocumentSnapshot>(
+                                              future: DatabaseService().getSinglePost(widget.docID),
+                                              builder: (BuildContext context, AsyncSnapshot <DocumentSnapshot> snapshot){
+                                                if (snapshot.hasError) {
+                                                  return const Text("Something went wrong");
+                                                }
 
-                                        if (snapshot.hasData && !snapshot.data!.exists) {
-                                          return Text("Document does not exist");
-                                        }
+                                                if (snapshot.hasData && !snapshot.data!.exists) {
+                                                  return const Text("Document does not exist");
+                                                }
 
-                                        if (snapshot.hasData) {
-                                          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                                          // return Text("Full Name: ${data['full_name']} ${data['last_name']}");
-                                          _userName =  nameAuthor(data['recentSender']);
-                                          return SingleChildScrollView( 
-                                            child: Column(
-                                              children: [
-                                                const Text("Your fans"),
-                                                Text(nameAuthor(data["users"].toString())),
+                                                if (snapshot.hasData) {
+                                                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                                  // return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+                                                  return  Column(
+                                                      children : [
+                                                        for (var r in data['users'])
+                                                          likeBubble(author_id: r.toString()
+                                                          ),
+                                                      ]);
 
-                                              ],
-                                            ),
-                                          );
-                                        }
-                                        return Text("loading");
-                                      }
-                                  ),
+
+
+
+                                                }
+                                                return Text("loading");
+                                              }
+                                          ),
+                                        ],
+                                      ),
+
+                                    )
+                                  ]
                                 ),
                               );
                             });
@@ -192,9 +208,7 @@ class _notificationBubbleState extends State<notificationBubble> {
                                           return SingleChildScrollView(
                                             child: Column(
                                               children: [
-                                                const Text("Recent Comment"),
-                                                recentMessage(comment: data["comment"], authID: data["sender"]),
-                                                const Text("More Comments"),
+                                                const Text("Comments", style: TextStyle(fontSize:  20),),
                                                 Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Container(

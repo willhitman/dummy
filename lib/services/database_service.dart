@@ -82,6 +82,7 @@ class DatabaseService {
     return postCollection.snapshots();
   }
 
+
   getsSinglePost(docid) {
     return postCollection.doc(docid).get().then((DocumentSnapshot doc) {
       final data = doc.data() as Map<String, dynamic>;
@@ -165,6 +166,9 @@ class DatabaseService {
     await userCollection
         .doc(authID)
         .set({"followers":FieldValue.arrayUnion([userID])}, SetOptions(merge: true));
+    await userCollection
+        .doc(userID)
+        .set({"following":FieldValue.arrayUnion([authID])}, SetOptions(merge: true));
   }
   // Post User Data
   getPostAuthorName(postAuthorID) {

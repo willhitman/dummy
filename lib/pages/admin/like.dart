@@ -50,25 +50,25 @@ class _AdminLikesState extends State<AdminLikes> {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: StreamBuilder(
-                  stream: notify,
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      var docs = snapshot.data.docs;
-                      return  Column(
+            child: StreamBuilder(
+                stream: notify,
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    var docs = snapshot.data.docs;
+                    return  SingleChildScrollView(
+                      child: Column(
                         children: [
                           for (doc in docs)
                            notificationBubble(likes:doc.data()["likes"].toString(), postName: nameAuthor(doc.id),docID:doc.id , comments: doc.data()["comments"].toString())
                         ],
-                      );
-                      // for (doc in docs) print(doc.id);
-                 }
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                      ),
                     );
-                  }),
-            ),
+                    // for (doc in docs) print(doc.id);
+               }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
           ),
 
         ],

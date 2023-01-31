@@ -45,11 +45,11 @@ class _ChatbubbleState extends State<Chatbubble> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Colors.black,
                   ),
                   child: Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Row(children: [
+                        const Icon(Icons.account_circle),
                         ValueListenableBuilder(
                             valueListenable: author,
                             builder: (context, author, _) {
@@ -76,7 +76,6 @@ class _ChatbubbleState extends State<Chatbubble> {
               child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Colors.black,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(2.0),
