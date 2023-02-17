@@ -25,6 +25,9 @@ class DatabaseService {
   final CollectionReference postCollection =
       FirebaseFirestore.instance.collection("post");
 
+  final CollectionReference payCollection =
+  FirebaseFirestore.instance.collection("pay");
+
   final CollectionReference notifyCollection =
       FirebaseFirestore.instance.collection("notifyMe");
 
@@ -43,7 +46,9 @@ class DatabaseService {
       "followers":[],
       "following":[],
       "profilePic": "",
-      "uid": uid
+      "uid": uid,
+      'reg': false
+
     });
   }
 
@@ -60,7 +65,7 @@ class DatabaseService {
   }
 
   // creating a post sir
-  Future createPost(String id, content, String type, String caption) async {
+  Future createPost(String id, content, String type, String caption, bool regstate) async {
     postCollection.add({
       "content": content,
       "type": type,
@@ -69,7 +74,8 @@ class DatabaseService {
       "comments": 0,
       "user": id,
       "users": [],
-      "tags": []
+      "tags": [],
+      "reg": regstate
     }).then((docRef) => {
           userCollection.doc(id).update({
             "posts": FieldValue.arrayUnion([docRef.id])
@@ -205,10 +211,6 @@ class DatabaseService {
     return postCollection.where("uid", isEqualTo: uid).get();
   }
 
-  // get group by name
-  searchByName(String groupName) {
-    return postCollection.where("groupName", isEqualTo: groupName).get();
-  }
 
   // check user membership
 
@@ -250,7 +252,7 @@ class DatabaseService {
     await userCollection.doc(uid).collection("notifyMe").doc(docid).delete();
   }
 
-  uploadImage(img, caption) async {
+  uploadImage(img, caption, bool regstate) async {
     var random = Random();
     var rand = random.nextInt(1000000000);
     // Give the image a random name
@@ -261,7 +263,7 @@ class DatabaseService {
       await image.putFile(img);
       String url = await image.getDownloadURL();
       print(url);
-      createPost(uid!, url, "image", caption);
+      createPost(uid!, url, "image", caption, regstate);
       return ("Uploaded image");
       print("Uploaded image");
       // ignore: nullable_type_in_catch_clause
@@ -288,5 +290,12 @@ class DatabaseService {
 
   String getExt(String res) {
     return res.substring(res.indexOf(".") + 1);
+  }
+//  create payment
+  Future createPay(String id, url) async {
+    payCollection.add({
+      "user": id,
+      "url": url,
+    });
   }
 }

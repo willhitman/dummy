@@ -20,6 +20,7 @@ class _MyWidgetState extends State<NewPost> {
   final picker = ImagePicker();
   bool _isLoading = false;
   TextEditingController captionController = TextEditingController();
+  bool _regState = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -89,9 +90,10 @@ class _MyWidgetState extends State<NewPost> {
                     print(cap);
                     final uploadimage = DatabaseService(
                             uid: FirebaseAuth.instance.currentUser!.uid)
-                        .uploadImage(_image, cap);
+                        .uploadImage(_image, cap, getRegState(FirebaseAuth.instance.currentUser!.uid) == "true"? true :false);
                     await uploadimage;
                     String result = uploadimage.toString();
+                    print(result);
                     if (result == "Uploaded image") {
                       // add caption to post and uid
 
@@ -119,5 +121,15 @@ class _MyWidgetState extends State<NewPost> {
             context, Colors.orange, "Please pick image to create post");
       }
     });
+  }
+  getRegState(userid){
+    DatabaseService().userCollection.doc(userid).get().then((document){
+      setState(() {
+        _regState = document["reg"];
+      });
+
+    });
+    print(_regState);
+    return _regState;
   }
 }

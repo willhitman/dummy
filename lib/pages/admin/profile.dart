@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lifestyle/helper/helper_function.dart';
+import 'package:lifestyle/widgets/follows.dart';
 
 import '../../services/database_service.dart';
 import '../../widgets/posts_template.dart';
@@ -23,12 +24,15 @@ class AdminProfile extends StatefulWidget {
 
 class _AdminProfileState extends State<AdminProfile> {
   String author = "";
+  String author2 = "";
   final aboutformKey = GlobalKey<FormState>();
   final optionsformKey = GlobalKey<FormState>();
   bool _aboutLoading = false;
   String _uploadResult ="";
   bool isUploadingDoc = false;
   bool _regState = false;
+  bool _regUserState = false;
+
   //preload followers
   var followers =[];
   //check followers greater than zero
@@ -214,7 +218,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                                             Column(
                                                               children: [
                                                                 // stream followers here
-                                                                makeFollowerList(snapshot.data["following"])
+                                                                makeFollowingList(snapshot.data["following"])
 
                                                               ],
                                                             )
@@ -525,6 +529,14 @@ class _AdminProfileState extends State<AdminProfile> {
     });
     return author;
   }
+  nameFollowing(uid){
+    getAuthorName(uid).then((value) {
+      setState(() {
+        author2 = value;
+      });
+    });
+    return author2;
+  }
 
   uploadAbout(about) async {
     if (aboutformKey.currentState!.validate()) {
@@ -540,18 +552,33 @@ class _AdminProfileState extends State<AdminProfile> {
               });
     }
   }
+  // make followers list
   makeFollowerList(var data){
     if(data.length>0 ){
       _hasFollowers = true;
-      for( var x in data){
-       return Row(
-         children :[
-           Icon(Icons.account_circle_rounded),
-           Text(nameAuthor(x))
-         ]
-       );
+     return Container (child:Column(children: [
+         for( var x in data)
+            FollowCard(user: nameAuthor(x), regState: _regUserState)
+     ],));
+           // Icon(Icons.account_circle_rounded),
+           // Text(nameAuthor(x))
       }
-    }else{
+    else{
+
+    }
+
+    return Container(child: Text("No Data"));
+  }
+  //make following list
+  makeFollowingList(var data){
+    if(data.length>0 ){
+      _hasFollowers = true;
+      return Container (child:Column(children: [
+        for( var x in data)
+          FollowCard(user: nameFollowing(x), regState: _regUserState)
+      ],));
+    }
+    else{
 
     }
 
@@ -567,5 +594,15 @@ class _AdminProfileState extends State<AdminProfile> {
     });
     print(_regState);
     return _regState;
+  }
+  bool getRegUserState(userid){
+    DatabaseService().userCollection.doc(userid).get().then((document){
+      setState(() {
+        _regUserState = document["reg"];
+      });
+
+    });
+    print(_regUserState);
+    return _regUserState;
   }
 }

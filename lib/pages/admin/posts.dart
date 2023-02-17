@@ -41,6 +41,9 @@ class _AdminPostsState extends State<AdminPosts> {
         body: StreamBuilder(
             stream: posts,
             builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
               if (snapshot.hasData) {
                 var docs = snapshot.data.docs;
                 // for (doc in docs) print(doc.id);
@@ -58,9 +61,11 @@ class _AdminPostsState extends State<AdminPosts> {
                             userID: doc.data()["user"])
                     ]);
 
-              } else {
-                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasData && !snapshot.data!.exists) {
+                return const Center(child: Text("Document does not exist"));
               }
+              return const Center(child:Text("tasked"));
+
             }));
   }
 
