@@ -65,8 +65,11 @@ class _PayWithEcoState extends State<PayWithEco> {
                         backgroundColor: Colors.orangeAccent,
                         elevation: 0,
                       ),
-                      onPressed: () async {},
-                      child: state
+                      onPressed: () async {
+
+                        ProcessTransaction();
+                      },
+                      child: !state
                           ? Text(
                               "Make Payment",
                               style: TextStyle(fontSize: 16),
@@ -84,6 +87,9 @@ class _PayWithEcoState extends State<PayWithEco> {
   }
 
   ProcessTransaction() async {
+    setState(() {
+      state= true;
+    });
     var url = Uri.parse('http://enlightenedminds.pythonanywhere.com/pay');
     var response = await http.post(url,
         headers: {
@@ -135,10 +141,14 @@ class _PayWithEcoState extends State<PayWithEco> {
                             "Payment Failed, Try Again");
                       }
                     }
-                  })
-                });
+                  }
+
+                  ) });
         //  check url now and possibly update post
       }
     }
+    setState(() {
+      state= false;
+    });
   }
 }

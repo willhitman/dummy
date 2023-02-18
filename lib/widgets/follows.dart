@@ -1,29 +1,44 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../services/database_service.dart';
+
 class FollowCard extends StatefulWidget {
-  final String user;
-  final bool regState;
-  const FollowCard({Key? key, required this.user, required this.regState}) : super(key: key);
+  var data;
+   FollowCard({Key? key, required this.data}) : super(key: key);
 
   @override
   State<FollowCard> createState() => _FollowCardState();
 }
 
 class _FollowCardState extends State<FollowCard> {
+  String author = "";
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      width: double.infinity,
-      child: ListTile(
-        leading: const Icon(Icons.account_circle),
-        title: Row(
-          children: [
-            Text(widget.user),
-            widget.regState? const Icon(Icons.verified, color: Colors.yellowAccent,size: 15,) : const Icon(Icons.verified, color: Colors.transparent, size: 15,)
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        if(widget.data.length>0 )
+          Container (child:Column(children: [
+              for( var x in widget.data)
+                ListTile(leading: Icon(Icons.account_circle),title: Text(nameAuthor(x)) )
+
+    ],))]
     );
+
   }
+  getAuthorName(var uid) async {
+    DocumentSnapshot authorName =
+    await DatabaseService().getPostAuthorName(uid);
+    return authorName["fullName"];
+  }
+
+  String nameAuthor(uid) {
+    getAuthorName(uid).then((value) {
+      setState(() {
+        author = value;
+      });
+    });
+    return author;
+  }
+
 }
