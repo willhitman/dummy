@@ -66,8 +66,8 @@ class _PostTemplateState extends State<PostTemplate> {
                   child:  CachedNetworkImage(
                     fit: BoxFit.fill,
                     imageUrl: widget.url,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    placeholder: (context, url) => const Center(child: SizedBox( height:20,width:20,child: CircularProgressIndicator(color: Colors.orangeAccent,))),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
 
 
