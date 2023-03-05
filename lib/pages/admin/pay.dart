@@ -26,9 +26,18 @@ class _PayWithEcoState extends State<PayWithEco> {
           (
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-        const Text(
-            "Please enter your phone number below, do not close this screen till transaction finishes", ),
-        SizedBox(
+        const Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 20),
+          child:  Center(
+            child: Text(
+                "Please enter your phone number below, do not close this screen till transaction finishes",),
+          ),
+
+        ),
+            const SizedBox(height: 20,),
+            const Text(
+              "This is the boost and promote option, your post will be reach a wider target audience. Valid for a week(7 days)",),
+        const SizedBox(
           height: 10,
         ),
         SizedBox(

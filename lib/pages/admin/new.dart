@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lifestyle/helper/helper_function.dart';
 import 'package:lifestyle/pages/home_page_admin.dart';
 import 'package:lifestyle/widgets/widgets.dart';
 
@@ -26,6 +27,7 @@ class _MyWidgetState extends State<NewPost> {
     // TODO: implement initState
     super.initState();
     _image = null;
+    getRegState(FirebaseAuth.instance.currentUser!.uid);
   }
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class _MyWidgetState extends State<NewPost> {
                     print(cap);
                     final uploadimage = DatabaseService(
                             uid: FirebaseAuth.instance.currentUser!.uid)
-                        .uploadImage(_image, cap, getRegState(FirebaseAuth.instance.currentUser!.uid) == "true"? true :false);
+                        .uploadImage(_image, cap, _regState);
                     await uploadimage;
                     String result = uploadimage.toString();
                     print(result);

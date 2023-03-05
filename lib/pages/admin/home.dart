@@ -22,49 +22,63 @@ class _AdminHomeState extends State<AdminHome> {
   var followers = [];
   final _controler = PageController(initialPage: 0);
   bool _regState = false;
+
+  preload() {
+    posts = DatabaseService().getsPostsFilter();
+  }
+
   @override
   void initState() {
     preload();
     super.initState();
   }
 
-  preload() {
-    posts = DatabaseService().getsPosts();
-  }
-
   var doc;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-                body: StreamBuilder(
-                    stream: posts,
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        var docs = snapshot.data.docs;
-                            for (doc in docs){
-                              // if(getRegState(doc.data()['user'])){
-                                return PageView(
-                                    controller: _controler,
-                                    scrollDirection: Axis.vertical,
-                                    children: [
-                                      for (doc in docs)
-                                        getRegState(doc.data()['user']) ? PostTemplate(
-                                            likes: doc.data()["likes"],
-                                            comments: doc.data()["comments"],
-                                            url: doc.data()["content"],
-                                            postid: doc.id.toString(),
-                                            caption: doc.data()["caption"],
-                                            userID: doc.data()["user"]) : SizedBox()
-                                    ]);
-
-                            }
-                          // followers.contains((doc.data()["user"]))
-                        // var regstate = doc.data()['user'];
-                        }
-                      return  SizedBox();
-
-                    }));
-
+        body: StreamBuilder(
+            stream: posts,
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                print('hasData');
+                var docs = snapshot.data.docs;
+                 return PageView(
+                    controller: _controler,
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      for (doc in docs)
+                        PostTemplate (
+                            likes: doc.data()["likes"],
+                            comments: doc.data()["comments"],
+                            url: doc.data()["content"],
+                            postid: doc.id.toString(),
+                            caption: doc.data()["caption"],
+                            userID: doc.data()["user"])
+                    ]);
+                for (doc in docs) {
+                  // if(getRegState(doc.data()['user'])){
+                  PageView(
+                      controller: _controler,
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        for (doc in docs)
+                          getRegState(doc.data()['user'])
+                              ? PostTemplate(
+                                  likes: doc.data()["likes"],
+                                  comments: doc.data()["comments"],
+                                  url: doc.data()["content"],
+                                  postid: doc.id.toString(),
+                                  caption: doc.data()["caption"],
+                                  userID: doc.data()["user"])
+                              : SizedBox()
+                      ]);
+                }
+                // followers.contains((doc.data()["user"]))
+                // var regstate = doc.data()['user'];
+              }
+              return SizedBox();
+            }));
   }
 
   makeFollowerList(var data) {

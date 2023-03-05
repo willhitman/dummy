@@ -93,7 +93,7 @@ class _PostTemplateState extends State<PostTemplate> {
                 followButton(
                   userID: widget.userID,
                 ),
-                SizedBox(
+               const SizedBox(
                   height: 5,
                 ),
                 LikeButton(
@@ -187,7 +187,7 @@ class _PostTemplateState extends State<PostTemplate> {
                 ),
                 Container(
                   height: 30,
-                  width: 200,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: const Color.fromARGB(150, 0, 0, 0),
@@ -197,7 +197,7 @@ class _PostTemplateState extends State<PostTemplate> {
                     child: RichText(
                         text: TextSpan(children: [
                       TextSpan(text: widget.caption),
-                      const TextSpan(text: " #flutter")
+                      // const TextSpan(text: " #flutter")
                     ])),
                   ),
                 )

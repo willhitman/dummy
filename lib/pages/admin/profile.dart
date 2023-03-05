@@ -75,7 +75,7 @@ class _AdminProfileState extends State<AdminProfile> {
                             : const Padding(
                                 padding: EdgeInsets.only(left: 120.0),
                                 child: Text(
-                                  "LifeStyle",
+                                  "The Menu",
                                   style: TextStyle(
                                     fontSize: 30,
                                   ),
@@ -160,6 +160,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                       children: [
                                         Column(
                                           children: [
+                                            Text('Posts'),
                                             const Icon(Icons.list),
                                             Text(snapshot.data["posts"].length
                                                 .toString())
@@ -171,6 +172,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                         InkWell(
                                           child: Column(
                                             children: [
+                                              const Text('Followers'),
                                               const Icon(
                                                   Icons.supervisor_account),
                                               Text((snapshot
@@ -202,7 +204,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                                                         .end,
                                                                 children: [
                                                                   InkWell(
-                                                                    child: Icon(
+                                                                    child: const Icon(
                                                                       Icons
                                                                           .close,
                                                                       size: 20,
@@ -232,6 +234,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                         InkWell(
                                           child: Column(
                                             children: [
+                                              const Text('Following'),
                                               const Icon(Icons
                                                   .supervisor_account_outlined),
                                               Text((snapshot
@@ -572,19 +575,22 @@ class _AdminProfileState extends State<AdminProfile> {
                 stream: DatabaseService().getPostsByUserID(widget.userID),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    for (var doc in snapshot.data!.docs) {
-                      return SizedBox(
-                        height: _screenSize.height - 150,
-                        child: PostTemplate(
-                          likes: doc["likes"],
-                          comments: doc["comments"],
-                          url: doc["content"],
-                          postid: doc.id.toString(),
-                          caption: doc["caption"],
-                          userID: doc["user"],
-                        ),
-                      );
-                    }
+                    return Column(
+                      children: [
+                        for (var doc in snapshot.data!.docs)
+                          SizedBox(
+                            height: _screenSize.height - 150,
+                            child: PostTemplate(
+                              likes: doc["likes"],
+                              comments: doc["comments"],
+                              url: doc["content"],
+                              postid: doc.id.toString(),
+                              caption: doc["caption"],
+                              userID: doc["user"],
+                            ),
+                          )
+                      ],
+                    );
                   } else {
                     return const Center(
                       child: Text("You have no Posts at the Moment"),

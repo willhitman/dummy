@@ -59,6 +59,7 @@ class DatabaseService {
     return snapshot;
   }
 
+
   //get user by ID
   getSingleUser(String ID) {
     return userCollection.doc(ID).snapshots();
@@ -87,6 +88,10 @@ class DatabaseService {
   getsPosts() {
     return postCollection.snapshots();
   }
+  getsPostsFilter() {
+    return postCollection.where('reg', isEqualTo: true).snapshots();
+  }
+
 
 
   getsSinglePost(docid) {

@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePageAdmin> {
           backgroundColor: Theme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           title: const Text(
-            "LifeStyle",
+            "The Menu",
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
           ),
