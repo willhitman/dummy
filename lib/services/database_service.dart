@@ -14,6 +14,7 @@ import 'package:path/path.dart';
 
 import '../widgets/widgets.dart';
 
+import 'package:intl/intl.dart';
 class DatabaseService {
   final String? uid;
   DatabaseService({this.uid});
@@ -67,6 +68,7 @@ class DatabaseService {
 
   // creating a post sir
   Future createPost(String id, content, String type, String caption, bool regstate) async {
+    String date = DateFormat('yyyy-MM-dd-HH-ss').format(DateTime.now());
     postCollection.add({
       "content": content,
       "type": type,
@@ -76,7 +78,8 @@ class DatabaseService {
       "user": id,
       "users": [],
       "tags": [],
-      "reg": regstate
+      "reg": regstate,
+      "date": date
     }).then((docRef) => {
           userCollection.doc(id).update({
             "posts": FieldValue.arrayUnion([docRef.id])
@@ -86,10 +89,10 @@ class DatabaseService {
 
   // get the posts
   getsPosts() {
-    return postCollection.snapshots();
+    return postCollection.orderBy("date", descending: true).snapshots();
   }
   getsPostsFilter() {
-    return postCollection.where('reg', isEqualTo: true).snapshots();
+    return postCollection.where('reg', isEqualTo: true).orderBy("date", descending: true).snapshots();
   }
 
 
