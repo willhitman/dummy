@@ -25,61 +25,38 @@ class _likeBubbleState extends State<likeBubble> {
 
   @override
   Widget build(BuildContext context) {
-    return  ListTile(
+    return ListTile(
       leading: Icon(Icons.account_circle),
-     title:  Row(
-       children: [
-         ValueListenableBuilder(
-             valueListenable: author,
-             builder: (context, author, _) {
-               return Text(author.toString());
-             }),
-         _regState
-             ? const Icon(
-           Icons.verified,
-           color: Colors.yellowAccent,
-           size: 15,
-         )
-             : const Icon(
-           Icons.verified,
-           color: Colors.transparent,
-           size: 15,
-         ),
-       ],
-     ),
-      trailing: const Icon(Icons.favorite, color: Colors.redAccent,),
+      title: Row(
+        children: [
+          ValueListenableBuilder(
+              valueListenable: author,
+              builder: (context, author, _) {
+                return Text(author.toString());
+              }),
+          _regState
+              ? const Icon(
+                  Icons.verified,
+                  color: Colors.yellowAccent,
+                  size: 15,
+                )
+              : const Icon(
+                  Icons.verified,
+                  color: Colors.transparent,
+                  size: 15,
+                ),
+        ],
+      ),
+      trailing: const Icon(
+        Icons.favorite,
+        color: Colors.redAccent,
+      ),
     );
-    // return Padding(
-    //   padding:  EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    //   child: Row(
-    //     children: [
-    //       const Padding(
-    //         padding: EdgeInsets.symmetric(horizontal: 10),
-    //         child: Icon(Icons.account_circle),
-    //       ),
-    //       ValueListenableBuilder(
-    //           valueListenable: author,
-    //           builder: (context, author, _) {
-    //             return Text(author.toString());
-    //           }),
-    //       _regState
-    //           ? const Icon(
-    //         Icons.verified,
-    //         color: Colors.yellowAccent,
-    //         size: 15,
-    //       )
-    //           : const Icon(
-    //         Icons.verified,
-    //         color: Colors.transparent,
-    //         size: 15,
-    //       )
-    //     ],
-    //   ),
-    // );
   }
+
   _getAuthorName(var uid) async {
     DocumentSnapshot authorName =
-    await DatabaseService().getPostAuthorName(uid);
+        await DatabaseService().getPostAuthorName(uid);
     return authorName["fullName"];
   }
 

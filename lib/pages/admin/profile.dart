@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lifestyle/helper/helper_function.dart';
+import 'package:lifestyle/pages/admin/single_post.dart';
 import 'package:lifestyle/widgets/follows.dart';
 
 import '../../services/database_service.dart';
@@ -204,7 +206,8 @@ class _AdminProfileState extends State<AdminProfile> {
                                                                         .end,
                                                                 children: [
                                                                   InkWell(
-                                                                    child: const Icon(
+                                                                    child:
+                                                                        const Icon(
                                                                       Icons
                                                                           .close,
                                                                       size: 20,
@@ -575,29 +578,108 @@ class _AdminProfileState extends State<AdminProfile> {
                 stream: DatabaseService().getPostsByUserID(widget.userID),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        for (var doc in snapshot.data!.docs)
-                          SizedBox(
-                            height: _screenSize.height - 150,
-                            child: PostTemplate(
-                              likes: doc["likes"],
-                              comments: doc["comments"],
-                              url: doc["content"],
-                              postid: doc.id.toString(),
-                              caption: doc["caption"],
-                              userID: doc["user"],
+                    var totalPosts = snapshot.data!.docs;
+                    var totalCount = totalPosts.length;
+                    return GridView.builder(
+                        itemCount: totalCount,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        primary: false,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Center(
+                              child: Card(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SinglePost(
+                                          likes:
+                                              (totalPosts[index].data()["likes"]).toString(),
+                                          comments: (totalPosts[index]
+                                              .data()["comments"]).toString(),
+                                          url: (totalPosts[index]
+                                              .data()["content"]).toString(),
+                                          postid:
+                                              (totalPosts[index].id).toString(),
+                                          caption: (totalPosts[index]
+                                              .data()["caption"]).toString(),
+                                          userid: (totalPosts[index]
+                                              .data()["user"]).toString())),
+                                );
+                              },
+                              child: Stack(children: [
+                                CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: totalPosts[index].data()["content"],
+                                  placeholder: (context, url) => const Center(
+                                      child: SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.orangeAccent,
+                                          ))),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              ]),
                             ),
-                          )
-                      ],
-                    );
+                          ));
+                        });
+                    // return Column(
+                    //   children: [
+                    //     for (var doc in snapshot.data!.docs)
+                    //       SizedBox(
+                    //         height: _screenSize.height - 150,
+                    //         child: PostTemplate(
+                    //           likes: doc["likes"],
+                    //           comments: doc["comments"],
+                    //           url: doc["content"],
+                    //           postid: doc.id.toString(),
+                    //           caption: doc["caption"],
+                    //           userID: doc["user"],
+                    //         ),
+                    //       )
+                    //   ],
+                    // );
                   } else {
                     return const Center(
                       child: Text("You have no Posts at the Moment"),
                     );
                   }
                   return const CircularProgressIndicator();
-                })
+                }),
+            Center(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(100, 255, 255, 255),
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(10))),
+                child: Padding(
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                       Padding(
+                         padding: EdgeInsets.only(left: 20.0),
+                         child: Text(
+                           "Logout",
+                           style: TextStyle(fontSize: 12),
+                         ),
+                       ),
+                      //Profile picture
+
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
