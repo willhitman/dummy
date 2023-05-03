@@ -5,7 +5,6 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +47,8 @@ class DatabaseService {
       "following":[],
       "profilePic": "",
       "uid": uid,
-      'reg': false
-
+      'reg': false,
+      'admin' : false
     });
   }
 
@@ -200,8 +199,12 @@ class DatabaseService {
     userData.first.then(
       (element) {
         element.docs.asMap().forEach((key, value) {
-          HelperFunctions.userNameKey = element.docs[key]["fullName"];
-          HelperFunctions.userEmailKey = element.docs[key]["email"];
+          HelperFunctions.saveUserNameSF(element.docs[key]["fullName"]);
+          HelperFunctions.saveUserEmailSF(element.docs[key]["email"]);
+          HelperFunctions.saveUserEmailSF(element.docs[key]["email"]);
+          HelperFunctions.saveUserEmailSF(element.docs[key]["email"]);
+
+
         });
       },
     );
@@ -306,4 +309,33 @@ class DatabaseService {
       "url": url,
     });
   }
+
+
+//  statistics
+// get doc count
+ getUserCount() async{
+   AggregateQuerySnapshot query = await  userCollection.count().get() ;
+   return query.count.toString();
+ }
+  getUserPosts() async{
+    AggregateQuerySnapshot query = await  postCollection.count().get() ;
+    return query.count.toString();
+  }
+  getRegUserCount() async {
+    AggregateQuerySnapshot query =
+    await userCollection.where("reg", isEqualTo: true).count().get();
+    return query.count.toString();
+  }
+
+  getBoostPostCount() async {
+    AggregateQuerySnapshot query =
+    await postCollection.where("boost", isEqualTo: true).count().get();
+    return query.count.toString();
+  }
+  getPayCount() async{
+    AggregateQuerySnapshot query = await  payCollection.count().get() ;
+    return query.count.toString();
+  }
+
+
 }

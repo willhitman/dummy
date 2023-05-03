@@ -11,8 +11,12 @@ class AuthService {
       User user = (await firebaseAuth.signInWithEmailAndPassword(
               email: email, password: password))
           .user!;
+      await HelperFunctions.saveUserLoggedINStatus(true);
+      await HelperFunctions.saveUserEmailSF(email);
       if (user != null) {
         // call database to update user
+        await HelperFunctions.saveUserLoggedINStatus(true);
+        await HelperFunctions.saveUserEmailSF(email);
         // login
         return true;
       }
@@ -29,9 +33,15 @@ class AuthService {
       User user = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
           .user!;
+      await HelperFunctions.saveUserLoggedINStatus(true);
+      await HelperFunctions.saveUserEmailSF(email);
+      await HelperFunctions.saveUserNameSF(fullName);
       if (user != null) {
         // call database to update user
         await DatabaseService(uid: user.uid).savingUserData(fullName, email);
+        await HelperFunctions.saveUserLoggedINStatus(true);
+        await HelperFunctions.saveUserEmailSF(email);
+        await HelperFunctions.saveUserNameSF(fullName);
         // login
         return true;
       }

@@ -42,7 +42,7 @@ class _AdminPostsState extends State<AdminPosts> {
             stream: posts,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasData) {
                 var docs = snapshot.data.docs;
@@ -58,7 +58,7 @@ class _AdminPostsState extends State<AdminPosts> {
                             url: doc.data()["content"],
                             postid: doc.id.toString(),
                             caption: doc.data()["caption"],
-                            userID: doc.data()["user"])
+                            userID: doc.data()["user"], DocumentReference: doc.reference,)
                     ]);
 
               } else if (snapshot.hasData && !snapshot.data!.exists) {

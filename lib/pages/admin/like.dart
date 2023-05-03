@@ -18,9 +18,9 @@ class _AdminLikesState extends State<AdminLikes> {
   @override
   void initState() {
     // TODO: implement initState
-    notify = DatabaseService().getNotifications(FirebaseAuth.instance.currentUser!.uid);
+    notify = DatabaseService()
+        .getNotifications(FirebaseAuth.instance.currentUser!.uid);
     super.initState();
-
   }
 
   @override
@@ -55,32 +55,37 @@ class _AdminLikesState extends State<AdminLikes> {
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     var docs = snapshot.data.docs;
-                    return  SingleChildScrollView(
+                    return SingleChildScrollView(
                       child: Column(
                         children: [
                           for (doc in docs)
-                           notificationBubble(likes:doc.data()["likes"].toString(), postName: nameAuthor(doc.id),docID:doc.id , comments: doc.data()["comments"].toString())
+                            notificationBubble(
+                                likes: doc.data()["likes"].toString(),
+                                postName: nameAuthor(doc.id),
+                                docID: doc.id,
+                                comments: doc.data()["comments"].toString())
                         ],
                       ),
                     );
                     // for (doc in docs) print(doc.id);
-               }
+                  }
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }),
           ),
-
         ],
       ),
     );
   }
-  PostCaption(var docid)  async{
-    DocumentSnapshot caption = await  DatabaseService().getSinglePost(docid);
+
+  PostCaption(var docid) async {
+    DocumentSnapshot caption = await DatabaseService().getSinglePost(docid);
     return caption["caption"];
   }
-  String nameAuthor(docid){
-    PostCaption(docid).then((value){
+
+  String nameAuthor(docid) {
+    PostCaption(docid).then((value) {
       setState(() {
         caption = value;
       });

@@ -54,28 +54,9 @@ class _AdminHomeState extends State<AdminHome> {
                             url: doc.data()["content"],
                             postid: doc.id.toString(),
                             caption: doc.data()["caption"],
-                            userID: doc.data()["user"])
+                            userID: doc.data()["user"], DocumentReference: doc.reference,)
                     ]);
-                for (doc in docs) {
-                  // if(getRegState(doc.data()['user'])){
-                  PageView(
-                      controller: _controler,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        for (doc in docs)
-                          getRegState(doc.data()['user'])
-                              ? PostTemplate(
-                                  likes: doc.data()["likes"],
-                                  comments: doc.data()["comments"],
-                                  url: doc.data()["content"],
-                                  postid: doc.id.toString(),
-                                  caption: doc.data()["caption"],
-                                  userID: doc.data()["user"])
-                              : SizedBox()
-                      ]);
-                }
-                // followers.contains((doc.data()["user"]))
-                // var regstate = doc.data()['user'];
+
               }
               return SizedBox();
             }));

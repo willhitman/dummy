@@ -61,7 +61,6 @@ class _notificationBubbleState extends State<notificationBubble> {
                     children: [
                      const  Text("Your Post"),
                       Text(widget.postName),
-                     const  Text("date")
                     ],
                   ),
                 ),

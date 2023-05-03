@@ -99,6 +99,7 @@ class _HomePageState extends State<HomePageAdmin> {
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
           ),
+
         ),
         body: _pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(

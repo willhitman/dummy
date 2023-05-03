@@ -57,7 +57,7 @@ class _LogInPageState extends State<LogInPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          "LifeStyle",
+                          "BSS Study",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 40,
@@ -67,7 +67,7 @@ class _LogInPageState extends State<LogInPage> {
                           height: 20,
                         ),
                         const Text(
-                          "See whats happening",
+                          "Dream, Believe and Build the Future",
                           style: TextStyle(color: Colors.white),
                         ),
                         const SizedBox(

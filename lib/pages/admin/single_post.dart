@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/posts_template.dart';
@@ -8,7 +9,8 @@ class SinglePost extends StatefulWidget {
   final String postid;
   final String caption;
   final String userid;
-  const SinglePost({Key? key, required this.likes, required this.comments, required this.url, required this.postid, required this.caption, required this.userid}) : super(key: key);
+  final DocumentReference;
+  const SinglePost({Key? key, required this.likes, required this.comments, required this.url, required this.postid, required this.caption, required this.userid,required this.DocumentReference}) : super(key: key);
 
   @override
   State<SinglePost> createState() => _SinglePostState();
@@ -29,7 +31,7 @@ class _SinglePostState extends State<SinglePost> {
               url: widget.url,
               postid: widget.postid,
               caption: widget.caption,
-              userID: widget.userid)
+              userID: widget.userid, DocumentReference:widget.DocumentReference ,)
         ])
     );
 

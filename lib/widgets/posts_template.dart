@@ -8,11 +8,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:lifestyle/pages/admin/profile.dart';
 import 'package:lifestyle/widgets/postbuttons/boost.dart';
 import 'package:lifestyle/widgets/postbuttons/comment.dart';
+import 'package:lifestyle/widgets/postbuttons/delete.dart';
 import 'package:lifestyle/widgets/postbuttons/follow.dart';
 import 'package:lifestyle/widgets/postbuttons/like.dart';
 import 'package:lifestyle/widgets/postbuttons/location.dart';
 import 'package:video_player/video_player.dart';
-
 
 import '../services/database_service.dart';
 
@@ -23,6 +23,7 @@ class PostTemplate extends StatefulWidget {
   final String url;
   final String caption;
   final String userID;
+  final DocumentReference;
   const PostTemplate(
       {Key? key,
       required this.likes,
@@ -30,7 +31,8 @@ class PostTemplate extends StatefulWidget {
       required this.postid,
       required this.caption,
       required this.url,
-      required this.userID})
+      required this.userID,
+      required this.DocumentReference})
       : super(key: key);
   @override
   State<PostTemplate> createState() => _PostTemplateState();
@@ -63,13 +65,19 @@ class _PostTemplateState extends State<PostTemplate> {
                 aspectRatio: (screenSize.height / screenSize.width),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child:  CachedNetworkImage(
+                  child: CachedNetworkImage(
                     fit: BoxFit.fill,
                     imageUrl: widget.url,
-                    placeholder: (context, url) => const Center(child: SizedBox( height:20,width:20,child: CircularProgressIndicator(color: Colors.orangeAccent,))),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    placeholder: (context, url) => const Center(
+                        child: SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.orangeAccent,
+                            ))),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-
 
                   // Image.network(
                   //   widget.url,
@@ -93,7 +101,7 @@ class _PostTemplateState extends State<PostTemplate> {
                 followButton(
                   userID: widget.userID,
                 ),
-               const SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 LikeButton(
@@ -117,6 +125,13 @@ class _PostTemplateState extends State<PostTemplate> {
                     ? boostButton(
                         docid: widget.postid,
                         userID: widget.userID,
+                      )
+                    : const SizedBox(
+                        width: 2.0,
+                      ),
+                getOwner(widget.userID)
+                    ? DeletePosts(
+                        DocumentReference: widget.DocumentReference,
                       )
                     : const SizedBox(
                         width: 2.0,

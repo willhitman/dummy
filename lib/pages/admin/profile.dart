@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lifestyle/helper/helper_function.dart';
+import 'package:lifestyle/pages/admin/admin.dart';
 import 'package:lifestyle/pages/admin/single_post.dart';
+import 'package:lifestyle/pages/auth/login_page.dart';
 import 'package:lifestyle/widgets/follows.dart';
 
 import '../../services/database_service.dart';
 import '../../widgets/posts_template.dart';
 import '../../widgets/widgets.dart';
+import 'package:lifestyle/services/auth_service.dart';
 
 class AdminProfile extends StatefulWidget {
   final String userID;
@@ -33,6 +36,7 @@ class _AdminProfileState extends State<AdminProfile> {
   String _uploadResult = "";
   bool isUploadingDoc = false;
   bool _regState = false;
+  bool _adminState = false;
   bool _regUserState = false;
 
   //preload followers
@@ -45,6 +49,7 @@ class _AdminProfileState extends State<AdminProfile> {
     // TODO: implement initState
     super.initState();
     getRegState(widget.userID);
+    getAdmin(widget.userID);
   }
 
   @override
@@ -107,10 +112,30 @@ class _AdminProfileState extends State<AdminProfile> {
                                     const EdgeInsets.symmetric(vertical: 15),
                                 child: Column(
                                   children: [
-                                    const Center(
-                                        child: Text(
-                                      "Your Profile",
-                                      style: TextStyle(fontSize: 20),
+                                    Center(
+                                        child: Row(
+                                          mainAxisAlignment:MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        _adminState ?  SizedBox(
+                                          height: 40,
+                                          child: InkWell(
+                                            child: const Card(
+
+                                              child: Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Text("Admin Options"),
+                                              ),
+                                            ),
+                                            onTap: (){
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => const AdminView()),
+                                              );
+                                            },
+                                          ),
+                                        ) : const SizedBox()
+                                      ],
                                     )),
                                     //Profile picture
                                     const Icon(
@@ -127,12 +152,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            widget.userID ==
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid
-                                                ? Text(
-                                                    HelperFunctions.userNameKey)
-                                                : Text(
+                                             Text(
                                                     snapshot.data["fullName"]),
                                             _regState
                                                 ? const Icon(
@@ -147,11 +167,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                                   )
                                           ],
                                         ),
-                                        widget.userID ==
-                                                FirebaseAuth
-                                                    .instance.currentUser!.uid
-                                            ? Text(HelperFunctions.userEmailKey)
-                                            : Text(snapshot.data["email"]),
+                                        Text(snapshot.data["email"]),
                                       ]),
                                     ),
                                     Row(
@@ -457,6 +473,8 @@ class _AdminProfileState extends State<AdminProfile> {
                       child: Column(
                         children: [
                           const Text("Options"),
+                          // HelperFunctions.userAdminState ? Placeholder() : Center(),
+
                           Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: ElevatedButton(
@@ -597,18 +615,23 @@ class _AdminProfileState extends State<AdminProfile> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SinglePost(
-                                          likes:
-                                              (totalPosts[index].data()["likes"]).toString(),
+                                          likes: (totalPosts[index]
+                                                  .data()["likes"])
+                                              .toString(),
                                           comments: (totalPosts[index]
-                                              .data()["comments"]).toString(),
+                                                  .data()["comments"])
+                                              .toString(),
                                           url: (totalPosts[index]
-                                              .data()["content"]).toString(),
+                                                  .data()["content"])
+                                              .toString(),
                                           postid:
                                               (totalPosts[index].id).toString(),
                                           caption: (totalPosts[index]
-                                              .data()["caption"]).toString(),
-                                          userid: (totalPosts[index]
-                                              .data()["user"]).toString())),
+                                                  .data()["caption"])
+                                              .toString(),
+                                          userid:
+                                              (totalPosts[index].data()["user"])
+                                                  .toString(), DocumentReference: totalPosts[index].reference,)),
                                 );
                               },
                               child: Stack(children: [
@@ -657,24 +680,31 @@ class _AdminProfileState extends State<AdminProfile> {
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     color: Color.fromARGB(100, 255, 255, 255),
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(10))),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Padding(
-                  padding:
-                  const EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                       Padding(
-                         padding: EdgeInsets.only(left: 20.0),
-                         child: Text(
-                           "Logout",
-                           style: TextStyle(fontSize: 12),
-                         ),
-                       ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: InkWell(
+                          child: const Text(
+                            "Logout",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          onTap: () {
+                            AuthService().signOut();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LogInPage(),
+                                ));
+                          },
+                        ),
+                      ),
                       //Profile picture
-
                     ],
                   ),
                 ),
@@ -767,5 +797,14 @@ class _AdminProfileState extends State<AdminProfile> {
     });
     print(_regUserState);
     return _regUserState;
+  }
+  getAdmin(userid) {
+    DatabaseService().userCollection.doc(userid).get().then((document) {
+      setState(() {
+        _adminState = document["admin"];
+      });
+    });
+    print(_adminState);
+    return _adminState;
   }
 }
