@@ -66,30 +66,47 @@ userCount(){
                         children: [
 
                           Card(
-                            child: Column(
-                              children: [
-                                Text("Users"),
-                                SizedBox(height: 10,),
-                                Text(userCountInt().toString())
-                              ],
+                            child: SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Users"),
+                                  SizedBox(height: 10,),
+                                  Text(userCountInt().toString())
+                                ],
+                              ),
                             ),
                           ),
                           Card(
-                            child: Column(
-                              children: [
-                                Text("Posts"),
-                                SizedBox(height: 10,),
-                                Text(postsCountInt().toString())
-                              ],
+                            child: SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Posts"),
+                                  SizedBox(height: 10,),
+                                  Text(postsCountInt().toString())
+                                ],
+                              ),
                             ),
                           ),
                           Card(
-                            child: Column(
-                              children: [
-                                Text("Payments"),
-                                SizedBox(height: 10,),
-                                Text("12")
-                              ],
+                            child: Center(
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Registered Users Posts", ),
+                                    SizedBox(height: 10,),
+                                    Text(regPostInt().toString())
+                                  ],
+                                ),
+                              ),
                             ),
                           )
                         ],
@@ -123,30 +140,45 @@ userCount(){
                       children: [
 
                         Card(
-                          child: Column(
-                            children: [
-                              Text("Users Verified"),
-                              SizedBox(height: 10,),
-                              Text(userRegInt().toString())
-                            ],
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Users Verified"),
+                                const SizedBox(height: 10,),
+                                Text(userRegInt().toString())
+                              ],
+                            ),
                           ),
                         ),
                         Card(
-                          child: Column(
-                            children: [
-                              Text("Posts Boosted"),
-                              SizedBox(height: 10,),
-                              Text(postBoostInt().toString())
-                            ],
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Posts Boosted"),
+                                const SizedBox(height: 10,),
+                                Text(postBoostInt().toString())
+                              ],
+                            ),
                           ),
                         ),
                         Card(
-                          child: Column(
-                            children: [
-                              Text("Payments Made"),
-                              SizedBox(height: 10,),
-                              Text(postPayInt().toString())
-                            ],
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Center(child: Text("Payments Made")),
+                                const SizedBox(height: 10,),
+                                Text(postPayInt().toString())
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -244,5 +276,22 @@ String userCountInt() {
       // print(postPay);
     });
     return postPay;
+  }
+
+  //registered posts count
+  getRegPosts() async{
+    String reg = await DatabaseService().getRegPostCount();
+    return reg;
+  }
+  String regPost = "";
+  String regPostInt() {
+    getRegPosts().then((count){
+      setState(() {
+        regPost = count;
+        print(count);
+      });
+      // print(regPost);
+    });
+    return regPost;
   }
 }

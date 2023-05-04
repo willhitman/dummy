@@ -326,6 +326,12 @@ class DatabaseService {
     await userCollection.where("reg", isEqualTo: true).count().get();
     return query.count.toString();
   }
+  //Registered users posts
+  getRegPostCount() async {
+    AggregateQuerySnapshot query =
+    await postCollection.where("reg", isEqualTo: true).count().get();
+    return query.count.toString();
+  }
 
   getBoostPostCount() async {
     AggregateQuerySnapshot query =
