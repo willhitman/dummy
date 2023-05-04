@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       const Text(
-                        "Register to know whats out there",
+                        "Register to know the Menu",
                         style: TextStyle(color: Colors.white),
                       ),
                       const SizedBox(
