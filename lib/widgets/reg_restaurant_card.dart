@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/admin/admin_posts_view.dart';
 import '../services/database_service.dart';
 
 class ResUserCard extends StatefulWidget {
@@ -22,7 +23,10 @@ class _ResUserCardState extends State<ResUserCard> {
           subtitle: const Text("click to see posts"),
       ),
       onTap: (){
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  AdminPosts(userID: widget.userName ),
+        ));
       },
     );
   }
