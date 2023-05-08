@@ -9,7 +9,8 @@ import 'package:lifestyle/widgets/posts_template.dart';
 import '../../services/database_service.dart';
 
 class AdminPosts extends StatefulWidget {
-  const AdminPosts({Key? key}) : super(key: key);
+  final String userID;
+  const AdminPosts({Key? key, required this.userID}) : super(key: key);
 
   @override
   State<AdminPosts> createState() => _AdminPostsState();
@@ -36,7 +37,7 @@ class _AdminPostsState extends State<AdminPosts> {
 
 
   preload() {
-    posts = DatabaseService().getsPosts();
+    posts = DatabaseService().getPostsByUserID(widget.userID);
   }
 
 
@@ -60,12 +61,12 @@ class _AdminPostsState extends State<AdminPosts> {
                     children: [
                       for (doc in docs)
                         PostTemplate (
-                            likes: doc.data()["likes"],
-                            comments: doc.data()["comments"],
-                            url: doc.data()["content"],
-                            postid: doc.id.toString(),
-                            caption: doc.data()["caption"],
-                            userID: doc.data()["user"], DocumentReference: doc.reference,)
+                          likes: doc.data()["likes"],
+                          comments: doc.data()["comments"],
+                          url: doc.data()["content"],
+                          postid: doc.id.toString(),
+                          caption: doc.data()["caption"],
+                          userID: doc.data()["user"], DocumentReference: doc.reference,)
                     ]);
 
               } else if (snapshot.hasData && !snapshot.data!.exists) {

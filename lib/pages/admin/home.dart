@@ -32,6 +32,13 @@ class _AdminHomeState extends State<AdminHome> {
     preload();
     super.initState();
   }
+  @override
+  void dispose(){
+    super.dispose();
+    preload();
+    posts;
+  }
+
 
   var doc;
   @override

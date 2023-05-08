@@ -93,6 +93,10 @@ class DatabaseService {
   getsPostsFilter() {
     return postCollection.where('reg', isEqualTo: true).orderBy("date", descending: true).snapshots();
   }
+  getUserByReg(){
+    return userCollection.where('reg', isEqualTo: true).snapshots();
+
+  }
 
 
 
@@ -104,7 +108,7 @@ class DatabaseService {
     });
   }
   getPostsByUserID(String ID){
-    return postCollection.where("user", isEqualTo: ID).snapshots();
+    return postCollection.where("user", isEqualTo: ID).orderBy("date", descending: true).snapshots();
   }
 
   getsPostComments(String docid) {
@@ -203,8 +207,6 @@ class DatabaseService {
           HelperFunctions.saveUserEmailSF(element.docs[key]["email"]);
           HelperFunctions.saveUserEmailSF(element.docs[key]["email"]);
           HelperFunctions.saveUserEmailSF(element.docs[key]["email"]);
-
-
         });
       },
     );
@@ -342,6 +344,10 @@ class DatabaseService {
     AggregateQuerySnapshot query = await  payCollection.count().get() ;
     return query.count.toString();
   }
+
+  // searchPostAuthorName(String uid) {
+  //   return postCollection.where("uid", isEqualTo: uid).get();
+  // }
 
 
 }
