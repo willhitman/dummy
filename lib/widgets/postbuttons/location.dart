@@ -8,9 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class LocationButton extends StatefulWidget {
-  final String location;
+  final String name;
   // ignore: non_constant_identifier_names
-  const LocationButton({Key? key, required this.location}) : super(key: key);
+  const LocationButton({Key? key, required this.name}) : super(key: key);
 
   @override
   State<LocationButton> createState() => _LocationButtonState();
@@ -54,6 +54,7 @@ class _LocationButtonState extends State<LocationButton> {
             InkWell(
               child: const Icon(Icons.pin_drop, size: 25,),
               onTap: () async {
+                String name = widget.name;
                 _isLoading ?
                 const Center(child: CircularProgressIndicator()):
                 await _getCurrentPosition().then((value) => {
@@ -73,7 +74,8 @@ class _LocationButtonState extends State<LocationButton> {
                                       child: WebView(
                                         gestureNavigationEnabled: true,
                                         initialUrl:
-                                            'https://www.google.com/maps/dir/?api=1&origin=${_currentPosition?.latitude},${_currentPosition?.longitude}&destination=Chicken+Inn+%}+%?&destination_place=Chicken+Inn&travelmode=walking',
+
+                                            'https://www.google.com/maps/dir/?api=1&origin=${_currentPosition?.latitude},${_currentPosition?.longitude}&destination=${widget.name}}+%?&destination_place=${widget.name}&travelmode=walking',
                                         // https://www.google.com/maps/dir/?api=1&origin=Google+Pyrmont+NSW&destination=QVB&destination_place_id=ChIJISz8NjyuEmsRFTQ9Iw7Ear8&travelmode=walking
                                         javascriptMode:
                                             JavascriptMode.unrestricted,

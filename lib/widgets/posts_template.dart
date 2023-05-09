@@ -116,7 +116,7 @@ class _PostTemplateState extends State<PostTemplate> {
                 ),
                 _regState
                     ? LocationButton(
-                        location: nameAuthor(widget.userID).toString(),
+                        name: nameAuthor(widget.userID).toString(),
                       )
                     : const SizedBox(
                         width: 2.0,
@@ -167,7 +167,7 @@ class _PostTemplateState extends State<PostTemplate> {
                     ),
                     Container(
                       height: 30,
-                      width: 150,
+                      width: 220,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromARGB(150, 0, 0, 0),

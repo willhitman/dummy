@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/database_service.dart';
 import '../../widgets/admin/card_stat.dart';
+import '../../widgets/pay_restaurant_admin.dart';
 import '../../widgets/reg_restaurant_card.dart';
 
 class AdminView extends StatefulWidget {
@@ -18,11 +19,16 @@ class AdminView extends StatefulWidget {
 
 class _AdminViewState extends State<AdminView> {
   String users = "";
-  late String author = "lifestyle";
+  late String author = "The Menu";
   var doc;
   Stream<QuerySnapshot>? usersStream;
+  Stream<QuerySnapshot>? pay;
   preload() {
     usersStream = DatabaseService().getUserByReg();
+  }
+
+  preload1() {
+    pay = DatabaseService().getsPay();
   }
 
   userCount() {
@@ -42,11 +48,14 @@ class _AdminViewState extends State<AdminView> {
     // TODO: implement initState
     super.initState();
     preload();
+    preload1();
   }
+
   @override
   void dispose() {
     super.dispose();
     preload();
+    preload1();
     getPayCount();
     getBoostCount();
     getRegCount();
@@ -156,8 +165,10 @@ class _AdminViewState extends State<AdminView> {
                                         for (doc in docs)
                                           ResUserCard(
                                             (doc.data()["fullName"].toString()),
-                                            userId:
-                                                (doc.data()['fullName']).toString(), userName: (doc.data()['uid']).toString(),
+                                            userId: (doc.data()['fullName'])
+                                                .toString(),
+                                            userName:
+                                                (doc.data()['uid']).toString(),
                                           )
                                       ],
                                     );
@@ -202,7 +213,7 @@ class _AdminViewState extends State<AdminView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text("Monitery Infomation"),
+                      const Text("Restaurant Monetary Information"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -254,9 +265,55 @@ class _AdminViewState extends State<AdminView> {
                                 ],
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text("Payments"),
+                          StreamBuilder(
+                              stream: pay,
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  print('Payments');
+                                  var docs = snapshot.data.docs;
+                                  return Column(
+                                    children: [
+                                      for (doc in docs)
+                                        PaymentCard(
+                                          doc.data()["user"].toString(),
+                                          userId: doc.data()["user"].toString(),
+                                          amount:
+                                              doc.data()["amount"].toString(),
+                                        )
+                                    ],
+                                  );
+                                  return ListTile(
+                                    leading: Text("click to see posts"),
+                                    title: doc.data()["likes"],
+                                  );
+                                  // return PageView(
+                                  //     controller: _controler,
+                                  //     scrollDirection: Axis.vertical,
+                                  //     children: [
+                                  //       for (doc in docs)
+                                  //         PostTemplate (
+                                  //           likes: doc.data()["likes"],
+                                  //           comments: doc.data()["comments"],
+                                  //           url: doc.data()["content"],
+                                  //           postid: doc.id.toString(),
+                                  //           caption: doc.data()["caption"],
+                                  //           userID: doc.data()["user"], DocumentReference: doc.reference,)
+                                  //     ]);
+                                }
+                                return SizedBox();
+                              }),
+                        ],
+                      )
+
                       //Profile picture
                     ],
                   ),

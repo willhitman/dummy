@@ -78,7 +78,8 @@ class DatabaseService {
       "users": [],
       "tags": [],
       "reg": regstate,
-      "date": date
+      "date": date,
+      'boost':false
     }).then((docRef) => {
           userCollection.doc(id).update({
             "posts": FieldValue.arrayUnion([docRef.id])
@@ -91,7 +92,7 @@ class DatabaseService {
     return postCollection.orderBy("date", descending: true).snapshots();
   }
   getsPostsFilter() {
-    return postCollection.where('reg', isEqualTo: true).orderBy("date", descending: true).snapshots();
+    return postCollection.where('boost', isEqualTo: true).orderBy("date", descending: true).snapshots();
   }
   getUserByReg(){
     return userCollection.where('reg', isEqualTo: true).snapshots();
@@ -305,11 +306,16 @@ class DatabaseService {
     return res.substring(res.indexOf(".") + 1);
   }
 //  create payment
-  Future createPay(String id, url) async {
+  Future createPay(String id, url, postId) async {
     payCollection.add({
       "user": id,
       "url": url,
-    });
+      "post": postId
+    }).then((value) => {
+    postCollection.doc(postId).update({
+    'boost': true,
+    })});
+
   }
 
 
@@ -345,9 +351,9 @@ class DatabaseService {
     return query.count.toString();
   }
 
-  // searchPostAuthorName(String uid) {
-  //   return postCollection.where("uid", isEqualTo: uid).get();
-  // }
+  getsPay() {
+    return payCollection.snapshots();
+  }
 
 
 }
