@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePageAdmin> {
           currentIndex: _selectedIndex,
           onTap: _navigationBottomBar,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Promo"),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "Posts"),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: ""),
             BottomNavigationBarItem(
