@@ -87,6 +87,7 @@ class DatabaseService {
         });
   }
 
+
   // get the posts
   getsPosts() {
     return postCollection.orderBy("date", descending: true).snapshots();
@@ -98,8 +99,6 @@ class DatabaseService {
     return userCollection.where('reg', isEqualTo: true).snapshots();
 
   }
-
-
 
   getsSinglePost(docid) {
     return postCollection.doc(docid).get().then((DocumentSnapshot doc) {
@@ -134,6 +133,7 @@ class DatabaseService {
   registerLike(String docid, String userid) async {
     postCollection.doc(docid).update({
       "users": FieldValue.arrayUnion([userid])
+
     });
   }
   checkUserStatus(String userID) async{
@@ -310,7 +310,8 @@ class DatabaseService {
     payCollection.add({
       "user": id,
       "url": url,
-      "post": postId
+      "post": postId,
+      'amount':"10"
     }).then((value) => {
     postCollection.doc(postId).update({
     'boost': true,

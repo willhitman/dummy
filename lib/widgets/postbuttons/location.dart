@@ -74,7 +74,6 @@ class _LocationButtonState extends State<LocationButton> {
                                       child: WebView(
                                         gestureNavigationEnabled: true,
                                         initialUrl:
-
                                             'https://www.google.com/maps/dir/?api=1&origin=${_currentPosition?.latitude},${_currentPosition?.longitude}&destination=${widget.name}}+%?&destination_place=${widget.name}&travelmode=walking',
                                         // https://www.google.com/maps/dir/?api=1&origin=Google+Pyrmont+NSW&destination=QVB&destination_place_id=ChIJISz8NjyuEmsRFTQ9Iw7Ear8&travelmode=walking
                                         javascriptMode:

@@ -96,7 +96,7 @@ class _notificationBubbleState extends State<notificationBubble> {
                         ),
                       ),
                       onTap: (){
-                        checkCount(widget.comments) ? showSnackBar(context,Colors.orange,"You currently have zero likes") : showBottomSheet(
+                        checkCount(widget.likes) ? showSnackBar(context,Colors.orange,"You currently have zero likes") : showBottomSheet(
                             context: context,
                             backgroundColor: const Color.fromARGB(190, 0, 0, 0),
                             builder: (BuildContext context) {

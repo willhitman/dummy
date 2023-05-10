@@ -26,6 +26,7 @@ class _DeletePostsState extends State<DeletePosts> {
         try{
           await FirebaseFirestore.instance.runTransaction((Transaction myTransaction) async {
              myTransaction.delete(widget.DocumentReference);
+
             showSnackBar(context, Colors.greenAccent, "Post has been Deleted");
             Navigator.of(context).pop();
           });
