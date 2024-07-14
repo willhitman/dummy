@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import '../../widgets/widgets.dart';
 
 class PayWithEco extends StatefulWidget {
   final String postID;
-  const PayWithEco({Key? key, required this.postID}) : super(key: key);
+  const PayWithEco({super.key, required this.postID});
 
   @override
   State<PayWithEco> createState() => _PayWithEcoState();
@@ -61,7 +60,7 @@ class _PayWithEcoState extends State<PayWithEco> {
                                     color: Theme.of(context).primaryColor,
                                   )),
                             ))
-                        : SizedBox(
+                        : const SizedBox(
                             height: 20,
                             width: 20,
                             child: CircularProgressIndicator(
@@ -80,11 +79,11 @@ class _PayWithEcoState extends State<PayWithEco> {
                             ProcessTransaction();
                           },
                           child: !state
-                              ? Text(
+                              ? const Text(
                                   "Make Payment",
                                   style: TextStyle(fontSize: 16),
                                 )
-                              : Text("Please Wait")),
+                              : const Text("Please Wait")),
                     )
                   ],
                 ),

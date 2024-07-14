@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../services/database_service.dart';
@@ -9,8 +7,7 @@ class Chatbubble extends StatefulWidget {
   final String comment;
   final String author_id;
 
-  const Chatbubble({Key? key, required this.comment, required this.author_id})
-      : super(key: key);
+  const Chatbubble({super.key, required this.comment, required this.author_id});
 
   @override
   State<Chatbubble> createState() => _ChatbubbleState();
@@ -47,7 +44,7 @@ class _ChatbubbleState extends State<Chatbubble> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Padding(
-                      padding: EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: Row(children: [
                         const Icon(Icons.account_circle),
                         ValueListenableBuilder(

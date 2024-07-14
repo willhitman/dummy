@@ -6,7 +6,7 @@ import '../../services/database_service.dart';
 import '../../shared/notificationBubble.dart';
 
 class AdminLikes extends StatefulWidget {
-  const AdminLikes({Key? key}) : super(key: key);
+  const AdminLikes({super.key});
 
   @override
   State<AdminLikes> createState() => _AdminLikesState();

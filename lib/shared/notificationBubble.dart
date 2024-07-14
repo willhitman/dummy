@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lifestyle/services/database_service.dart';
-import 'package:lifestyle/shared/recent_message.dart';
 import 'package:lifestyle/widgets/comment_bubble.dart';
 import 'package:lifestyle/widgets/like_bubble.dart';
 import 'package:lifestyle/widgets/widgets.dart';
@@ -13,12 +12,11 @@ class notificationBubble extends StatefulWidget {
   final String likes;
   final String comments;
   const notificationBubble(
-      {Key? key,
+      {super.key,
       required this.docID,
       required this.likes,
       required this.comments,
-      required this.postName})
-      : super(key: key);
+      required this.postName});
 
   @override
   State<notificationBubble> createState() => _notificationBubbleState();
@@ -139,7 +137,7 @@ class _notificationBubbleState extends State<notificationBubble> {
 
 
                                                 }
-                                                return Text("loading");
+                                                return const Text("loading");
                                               }
                                           ),
                                         ],
@@ -193,11 +191,11 @@ class _notificationBubbleState extends State<notificationBubble> {
                                       future: DatabaseService().getSinglePost(widget.docID),
                                       builder: (BuildContext context, AsyncSnapshot <DocumentSnapshot> snapshot){
                                         if (snapshot.hasError) {
-                                          return Text("Something went wrong");
+                                          return const Text("Something went wrong");
                                         }
 
                                         if (snapshot.hasData && !snapshot.data!.exists) {
-                                          return Text("Document does not exist");
+                                          return const Text("Document does not exist");
                                         }
 
                                         if (snapshot.connectionState == ConnectionState.done) {
@@ -226,7 +224,7 @@ class _notificationBubbleState extends State<notificationBubble> {
                                                           builder: (context,
                                                               AsyncSnapshot snapshot) {
                                                             if (snapshot.hasData) {
-                                                              CircularProgressIndicator();
+                                                              const CircularProgressIndicator();
 
                                                               // get the new doc
                                                               return ListView.builder(
@@ -261,7 +259,7 @@ class _notificationBubbleState extends State<notificationBubble> {
                                             ),
                                           );
                                         }
-                                        return Text("loading");
+                                        return const Text("loading");
                                       }
                                   ),
                                 ),

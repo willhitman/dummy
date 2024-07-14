@@ -5,7 +5,7 @@ import '../widgets.dart';
 
 class DeletePosts extends StatefulWidget {
   final DocumentReference;
-  const DeletePosts({Key? key,required this.DocumentReference}) : super(key: key);
+  const DeletePosts({super.key,required this.DocumentReference});
 
   @override
   State<DeletePosts> createState() => _DeletePostsState();
@@ -15,13 +15,13 @@ class _DeletePostsState extends State<DeletePosts> {
   showAlertDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("Cancel"),
+      child: const Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("delete"),
+      child: const Text("delete"),
       onPressed: () async {
         try{
           await FirebaseFirestore.instance.runTransaction((Transaction myTransaction) async {

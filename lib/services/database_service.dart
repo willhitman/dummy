@@ -4,16 +4,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:lifestyle/helper/helper_function.dart';
 import 'package:path/path.dart';
-
-import '../widgets/widgets.dart';
-
 import 'package:intl/intl.dart';
+
 class DatabaseService {
   final String? uid;
   DatabaseService({this.uid});
@@ -200,7 +195,7 @@ class DatabaseService {
 
   getUserName() async {
     Stream<QuerySnapshot> userData =
-        await userCollection.where("uid", isEqualTo: uid).snapshots();
+        userCollection.where("uid", isEqualTo: uid).snapshots();
     userData.first.then(
       (element) {
         element.docs.asMap().forEach((key, value) {

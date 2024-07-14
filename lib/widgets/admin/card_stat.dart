@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../services/database_service.dart';
 
 class CardStat extends StatefulWidget {
   final String val;
-  const CardStat({Key? key, required this.val,}) : super(key: key);
+  const CardStat({super.key, required this.val,});
 
   @override
   State<CardStat> createState() => _cardStatState();

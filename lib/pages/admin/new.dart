@@ -9,7 +9,7 @@ import 'package:lifestyle/widgets/widgets.dart';
 import '../../services/database_service.dart';
 
 class NewPost extends StatefulWidget {
-  const NewPost({Key? key}) : super(key: key);
+  const NewPost({super.key});
 
   @override
   State<NewPost> createState() => _MyWidgetState();

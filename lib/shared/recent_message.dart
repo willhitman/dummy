@@ -1,7 +1,6 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../services/database_service.dart';
@@ -9,7 +8,7 @@ import '../services/database_service.dart';
 class recentMessage extends StatefulWidget {
   final String comment;
   final String authID;
-  const recentMessage({Key? key, required this.comment, required this.authID}) : super(key: key);
+  const recentMessage({super.key, required this.comment, required this.authID});
 
   @override
   State<recentMessage> createState() => _recentMessageState();
@@ -21,7 +20,7 @@ class _recentMessageState extends State<recentMessage> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.chat_bubble_outline),
+      leading: const Icon(Icons.chat_bubble_outline),
       title: Text(widget.comment),
       subtitle: ValueListenableBuilder(
           valueListenable: author,

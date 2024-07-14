@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/admin/admin_posts_view.dart';
 import '../services/database_service.dart';
 
 class PaymentCard extends StatefulWidget {
   final String userId;
   final String amount;
-  const PaymentCard(data, {Key? key, required this.userId, required this.amount}) : super(key: key);
+  const PaymentCard(data, {super.key, required this.userId, required this.amount});
 
   @override
   State<PaymentCard> createState() => _ResUserCardState();

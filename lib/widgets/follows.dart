@@ -5,7 +5,7 @@ import '../services/database_service.dart';
 
 class FollowCard extends StatefulWidget {
   var data;
-   FollowCard({Key? key, required this.data}) : super(key: key);
+   FollowCard({super.key, required this.data});
 
   @override
   State<FollowCard> createState() => _FollowCardState();
@@ -20,7 +20,7 @@ class _FollowCardState extends State<FollowCard> {
         if(widget.data.length>0 )
           Container (child:Column(children: [
               for( var x in widget.data)
-                ListTile(leading: Icon(Icons.account_circle),title: Text(nameAuthor(x)) )
+                ListTile(leading: const Icon(Icons.account_circle),title: Text(nameAuthor(x)) )
 
     ],))]
     );

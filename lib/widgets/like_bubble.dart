@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../services/database_service.dart';
 
 class likeBubble extends StatefulWidget {
   final String author_id;
-  const likeBubble({Key? key, required this.author_id}) : super(key: key);
+  const likeBubble({super.key, required this.author_id});
 
   @override
   State<likeBubble> createState() => _likeBubbleState();
@@ -26,7 +25,7 @@ class _likeBubbleState extends State<likeBubble> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.account_circle),
+      leading: const Icon(Icons.account_circle),
       title: Row(
         children: [
           ValueListenableBuilder(

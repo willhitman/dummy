@@ -6,7 +6,7 @@ import '../widgets.dart';
 
 class followButton extends StatefulWidget {
   final String userID;
-  followButton({Key? key, required this.userID}) : super(key: key);
+  const followButton({super.key, required this.userID});
 
   @override
   State<followButton> createState() => _LikeButtonState();

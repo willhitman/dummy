@@ -4,24 +4,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:lifestyle/helper/helper_function.dart';
 import 'package:lifestyle/pages/admin/admin.dart';
 import 'package:lifestyle/pages/admin/single_post.dart';
 import 'package:lifestyle/pages/auth/login_page.dart';
 import 'package:lifestyle/widgets/follows.dart';
 
 import '../../services/database_service.dart';
-import '../../widgets/posts_template.dart';
 import '../../widgets/widgets.dart';
 import 'package:lifestyle/services/auth_service.dart';
 
 class AdminProfile extends StatefulWidget {
   final String userID;
-  const AdminProfile({Key? key, required this.userID}) : super(key: key);
+  const AdminProfile({super.key, required this.userID});
 
   @override
   State<AdminProfile> createState() => _AdminProfileState();
@@ -42,7 +37,7 @@ class _AdminProfileState extends State<AdminProfile> {
   //preload followers
   var followers = [];
   //check followers greater than zero
-  bool _hasFollowers = false;
+  final bool _hasFollowers = false;
   var ids = [];
   @override
   void initState() {
@@ -54,9 +49,9 @@ class _AdminProfileState extends State<AdminProfile> {
 
   @override
   Widget build(BuildContext context) {
-    var _screenSize = MediaQuery.of(context).size;
-    final _controler = PageController(initialPage: 0);
-    late File? _file;
+    var screenSize = MediaQuery.of(context).size;
+    final controler = PageController(initialPage: 0);
+    late File? file;
 
     String about = "";
     return Scaffold(
@@ -71,12 +66,12 @@ class _AdminProfileState extends State<AdminProfile> {
                       children: [
                         widget.userID != FirebaseAuth.instance.currentUser!.uid
                             ? InkWell(
-                                child: Icon(Icons.arrow_back),
+                                child: const Icon(Icons.arrow_back),
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         widget.userID == FirebaseAuth.instance.currentUser!.uid
                             ? const SizedBox()
                             : const Padding(
@@ -91,7 +86,7 @@ class _AdminProfileState extends State<AdminProfile> {
                       ],
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
             StreamBuilder(
                 stream: DatabaseService().getSingleUser(widget.userID),
                 builder: (context, AsyncSnapshot snapshot) {
@@ -178,7 +173,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                       children: [
                                         Column(
                                           children: [
-                                            Text('Posts'),
+                                            const Text('Posts'),
                                             const Icon(Icons.list),
                                             Text(snapshot.data["posts"].length
                                                 .toString())
@@ -284,7 +279,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                                                       .end,
                                                               children: [
                                                                 InkWell(
-                                                                  child: Icon(
+                                                                  child: const Icon(
                                                                     Icons.close,
                                                                     size: 20,
                                                                     color: Colors
@@ -337,7 +332,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                 child: Column(children: [
                                   const Text("About"),
                                   SizedBox(
-                                      width: (_screenSize.width - 60),
+                                      width: (screenSize.width - 60),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 5),
@@ -491,7 +486,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                       builder: (BuildContext context) {
                                         return SizedBox(
                                           height: 500,
-                                          width: _screenSize.width,
+                                          width: screenSize.width,
                                           child: SingleChildScrollView(
                                               child: Column(
                                             children: [
@@ -551,9 +546,9 @@ class _AdminProfileState extends State<AdminProfile> {
                                                                   .toList();
                                                               for (final fl
                                                                   in files) {
-                                                                _file = fl;
+                                                                file = fl;
                                                                 uploadDoc(
-                                                                    _file);
+                                                                    file);
                                                               }
                                                             } else {
                                                               // User canceled the picker
@@ -563,7 +558,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                                       ),
                                                       SizedBox(
                                                         width:
-                                                            _screenSize.width,
+                                                            screenSize.width,
                                                         child: const Padding(
                                                           padding:
                                                               EdgeInsets.all(
@@ -591,7 +586,7 @@ class _AdminProfileState extends State<AdminProfile> {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
             StreamBuilder(
                 stream: DatabaseService().getPostsByUserID(widget.userID),
                 builder: (context, AsyncSnapshot snapshot) {
@@ -699,7 +694,7 @@ class _AdminProfileState extends State<AdminProfile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LogInPage(),
+                                  builder: (context) => const LogInPage(),
                                 ));
                           },
                         ),

@@ -8,7 +8,7 @@ import 'package:lifestyle/services/auth_service.dart';
 import '../../widgets/widgets.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -161,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 50,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context).primaryColor,
+
                               elevation: 0,
                             ),
                             onPressed: () {
@@ -187,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   decoration: TextDecoration.underline),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  nextScreenReplace(context, LogInPage());
+                                  nextScreenReplace(context, const LogInPage());
                                 },
                             )
                           ]))
@@ -213,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
             await HelperFunctions.saveUserEmailSF(email);
             await HelperFunctions.saveUserNameSF(userName);
 
-            nextScreen(context, HomePageAdmin());
+            nextScreen(context, const HomePageAdmin());
           } else {
             showSnackBar(context, Colors.redAccent, value);
             setState(() {

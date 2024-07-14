@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lifestyle/pages/admin/profile.dart';
 import 'package:lifestyle/widgets/postbuttons/boost.dart';
 import 'package:lifestyle/widgets/postbuttons/comment.dart';
@@ -12,7 +9,6 @@ import 'package:lifestyle/widgets/postbuttons/delete.dart';
 import 'package:lifestyle/widgets/postbuttons/follow.dart';
 import 'package:lifestyle/widgets/postbuttons/like.dart';
 import 'package:lifestyle/widgets/postbuttons/location.dart';
-import 'package:video_player/video_player.dart';
 
 import '../services/database_service.dart';
 
@@ -25,15 +21,14 @@ class PostTemplate extends StatefulWidget {
   final String userID;
   final DocumentReference;
   const PostTemplate(
-      {Key? key,
+      {super.key,
       required this.likes,
       required this.comments,
       required this.postid,
       required this.caption,
       required this.url,
       required this.userID,
-      required this.DocumentReference})
-      : super(key: key);
+      required this.DocumentReference});
   @override
   State<PostTemplate> createState() => _PostTemplateState();
 }

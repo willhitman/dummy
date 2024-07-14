@@ -1,23 +1,13 @@
-import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:lifestyle/services/api.dart';
-import 'package:http/http.dart' as http;
 
 import '../../pages/admin/pay.dart';
-import '../../services/database_service.dart';
-import '../widgets.dart';
 
 class boostButton extends StatefulWidget {
   final String docid;
   final String userID;
 
   // ignore: non_constant_identifier_names
-  const boostButton({Key? key, required this.docid, required this.userID})
-      : super(key: key);
+  const boostButton({super.key, required this.docid, required this.userID});
 
   @override
   State<boostButton> createState() => _BoostButtonState();

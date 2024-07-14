@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lifestyle/helper/helper_function.dart';
 import 'package:lifestyle/pages/auth/login_page.dart';
 import 'package:lifestyle/pages/home_page_admin.dart';
-import 'package:lifestyle/services/database_service.dart';
-import 'package:lifestyle/shared/constants.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -16,7 +14,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -46,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(brightness: Brightness.dark),
       debugShowCheckedModeBanner: true,
-      home: _isSignedIn ? const HomePageAdmin() : LogInPage(),
+      home: _isSignedIn ? const HomePageAdmin() : const LogInPage(),
     );
   }
 }

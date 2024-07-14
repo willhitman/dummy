@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:lifestyle/services/database_service.dart';
 import 'package:lifestyle/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class paymentUI extends StatefulWidget {
   final String postId;
-  const paymentUI({Key? key, required this.postId}) : super(key: key);
+  const paymentUI({super.key, required this.postId});
 
   @override
   State<paymentUI> createState() => _paymentUIState();
@@ -21,7 +20,7 @@ class _paymentUIState extends State<paymentUI> {
     return SizedBox(
       height: 300,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: Column(
           children: [
             !state

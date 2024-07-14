@@ -6,19 +6,14 @@ import 'package:lifestyle/pages/admin/like.dart';
 import 'package:lifestyle/pages/admin/new.dart';
 import 'package:lifestyle/pages/admin/posts.dart';
 import 'package:lifestyle/pages/admin/profile.dart';
-import 'package:lifestyle/pages/auth/login_page.dart';
 import 'package:lifestyle/services/database_service.dart';
-import 'package:lifestyle/widgets/widgets.dart';
 import 'dart:io';
 import '../services/auth_service.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomePageAdmin extends StatefulWidget {
-  const HomePageAdmin({Key? key}) : super(key: key);
+  const HomePageAdmin({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -65,7 +60,7 @@ class _HomePageState extends State<HomePageAdmin> {
     });
   }
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   @override
   void dispose() {
@@ -73,16 +68,16 @@ class _HomePageState extends State<HomePageAdmin> {
   }
 
   final List<Widget> _pages = [
-    AdminHome(),
-    AdminPosts(),
-    NewPost(),
-    AdminLikes(),
+    const AdminHome(),
+    const AdminPosts(),
+    const NewPost(),
+    const AdminLikes(),
     AdminProfile( userID: FirebaseAuth.instance.currentUser!.uid,)
   ];
   int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    void _navigationBottomBar(int index) {
+    void navigationBottomBar(int index) {
       setState(() {
         _selectedIndex = index;
       });
@@ -105,7 +100,7 @@ class _HomePageState extends State<HomePageAdmin> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
-          onTap: _navigationBottomBar,
+          onTap: navigationBottomBar,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Promo"),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "Posts"),

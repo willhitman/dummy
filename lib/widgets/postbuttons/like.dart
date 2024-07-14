@@ -9,11 +9,10 @@ class LikeButton extends StatefulWidget {
 
   var number;
   LikeButton(
-      {Key? key,
+      {super.key,
       required this.number,
       required this.docid,
-      required this.userID})
-      : super(key: key);
+      required this.userID});
 
   @override
   State<LikeButton> createState() => _LikeButtonState();

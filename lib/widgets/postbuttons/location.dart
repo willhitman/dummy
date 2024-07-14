@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -10,7 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class LocationButton extends StatefulWidget {
   final String name;
   // ignore: non_constant_identifier_names
-  const LocationButton({Key? key, required this.name}) : super(key: key);
+  const LocationButton({super.key, required this.name});
 
   @override
   State<LocationButton> createState() => _LocationButtonState();
@@ -72,16 +67,13 @@ class _LocationButtonState extends State<LocationButton> {
                                       height: 560,
                                       width: (double.infinity / 10),
                                       child: WebView(
-                                        gestureNavigationEnabled: true,
                                         initialUrl:
                                             'https://www.google.com/maps/dir/?api=1&origin=${_currentPosition?.latitude},${_currentPosition?.longitude}&destination=${widget.name}}+%?&destination_place=${widget.name}&travelmode=walking',
-                                        // https://www.google.com/maps/dir/?api=1&origin=Google+Pyrmont+NSW&destination=QVB&destination_place_id=ChIJISz8NjyuEmsRFTQ9Iw7Ear8&travelmode=walking
-                                        javascriptMode:
-                                            JavascriptMode.unrestricted,
-                                      ),
+                                        gestureNavigationEnabled: true,
+
                                     ),
                                   ),
-                                ],
+                                  )],
                               ),
                             );
                           })
@@ -125,5 +117,32 @@ class _LocationButtonState extends State<LocationButton> {
       return false;
     }
     return true;
+  }
+
+}
+class WebView extends StatefulWidget{
+  final String url;
+
+  WebView({required this.url})
+
+  @override
+  WebViewState createState() => WebViewState();
+}
+class WebViewState extends State<WebView>{
+  late final WebViewController _controller;
+
+  @override
+  void initState(){
+    super.initState();
+    _controller = WebViewController();
+  }
+
+  @override
+  Widget build(BuildContext context){
+
+    return WebViewWidget(
+        controller: _controller,
+        initialUrl:widget.url,
+    )
   }
 }

@@ -7,7 +7,7 @@ import '../services/database_service.dart';
 class ResUserCard extends StatefulWidget {
   final String userId;
   final String userName;
-  const ResUserCard(data, {Key? key, required this.userId, required this.userName}) : super(key: key);
+  const ResUserCard(data, {super.key, required this.userId, required this.userName});
 
   @override
   State<ResUserCard> createState() => _ResUserCardState();

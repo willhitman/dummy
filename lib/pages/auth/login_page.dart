@@ -9,7 +9,7 @@ import '../../helper/helper_function.dart';
 import '../home_page_admin.dart';
 
 class LogInPage extends StatefulWidget {
-  LogInPage({Key? key}) : super(key: key);
+  const LogInPage({super.key});
 
   @override
   _LogInPageState createState() {
@@ -155,7 +155,7 @@ class _LogInPageState extends State<LogInPage> {
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    nextScreenReplace(context, RegisterPage());
+                                    nextScreenReplace(context, const RegisterPage());
                                   },
                               )
                             ]))

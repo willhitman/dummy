@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/database_service.dart';
-import '../../widgets/admin/card_stat.dart';
 import '../../widgets/pay_restaurant_admin.dart';
 import '../../widgets/reg_restaurant_card.dart';
 
 class AdminView extends StatefulWidget {
-  const AdminView({Key? key}) : super(key: key);
+  const AdminView({super.key});
 
   @override
   State<AdminView> createState() => _AdminViewState();
@@ -83,7 +82,7 @@ class _AdminViewState extends State<AdminView> {
                     color: Color.fromARGB(100, 255, 255, 255),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,8 +99,8 @@ class _AdminViewState extends State<AdminView> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Users"),
-                                    SizedBox(
+                                    const Text("Users"),
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(userCountInt().toString())
@@ -116,8 +115,8 @@ class _AdminViewState extends State<AdminView> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Posts"),
-                                    SizedBox(
+                                    const Text("Posts"),
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(postsCountInt().toString())
@@ -133,10 +132,10 @@ class _AdminViewState extends State<AdminView> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Registered Users Posts",
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Text(regPostInt().toString())
@@ -173,7 +172,7 @@ class _AdminViewState extends State<AdminView> {
                                       ],
                                     );
                                     return ListTile(
-                                      leading: Text("click to see posts"),
+                                      leading: const Text("click to see posts"),
                                       title: doc.data()["likes"],
                                     );
                                     // return PageView(
@@ -190,7 +189,7 @@ class _AdminViewState extends State<AdminView> {
                                     //           userID: doc.data()["user"], DocumentReference: doc.reference,)
                                     //     ]);
                                   }
-                                  return SizedBox();
+                                  return const SizedBox();
                                 }),
                           ],
                         )
@@ -208,7 +207,7 @@ class _AdminViewState extends State<AdminView> {
                     color: Color.fromARGB(100, 255, 255, 255),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -292,7 +291,7 @@ class _AdminViewState extends State<AdminView> {
                                     ],
                                   );
                                   return ListTile(
-                                    leading: Text("click to see posts"),
+                                    leading: const Text("click to see posts"),
                                     title: doc.data()["likes"],
                                   );
                                   // return PageView(
@@ -309,7 +308,7 @@ class _AdminViewState extends State<AdminView> {
                                   //           userID: doc.data()["user"], DocumentReference: doc.reference,)
                                   //     ]);
                                 }
-                                return SizedBox();
+                                return const SizedBox();
                               }),
                         ],
                       )
